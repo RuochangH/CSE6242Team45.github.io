@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>RAPIDS CSE6242 by Team45</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" integrity="sha256-iYUgmrapfDGvBrePJPrMWQZDcObdAcStKBpjP3Az+3s=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/14e7d6df27.js" crossorigin="anonymous"></script>   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.0/mapbox-gl-draw.css' type='text/css'/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" integrity="sha256-iYUgmrapfDGvBrePJPrMWQZDcObdAcStKBpjP3Az+3s=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js'></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.0/mapbox-gl-draw.js'></script>
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js" integrity="sha256-CNm+7c26DTTCGRQkM9vp7aP85kHFMqs9MhPEuytF+fQ=" crossorigin="anonymous"></script>
+    <script src = "https://d3js.org/d3.v3.min.js"></script>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+    <div id="title">
+      <h1 id="solid" style="color:#7EBFDC"><i class="fa-solid fa-wheat-awn"></i></h1>
+      <div id="shades">
+        <h1 id="shade1" style="color:#7EBFDC"><i class="fa-solid fa-wheat-awn"></i></h1>
+        <h1 id="shade2" style="color:#7EBFDC"><i class="fa-solid fa-wheat-awn"></i></h1>
+      </div>
+      <h1 id="name" style="color:#535E80">RAPIDS Tool</h1>
+    </div>
+
+    <div class="intro">
+      <h3 style="color:#F5AD62; font-weight: bold">Introduction</h3>
+      <p style="font-size:15px">Placeholder introduction of the project.</p>
+      <p style="font-size:15px">Placeholder introduction of the tool functionality. </p>
+      <p style="font-size:15px; font-style:italic">Before start, you can view both the current and historical overall crops yield by mouseover or click</p>
+      <button id="s0"> Get Started! </button>
+    </div>
+
+      <div id="process" style="display: none;">
+        <p style="font-size:14px; font-style:italic" >Placeholder for instructions.</p>
+      <button id="locate" class="btn btn-link collapsed" style="color:#535E80; font-weight:bold; font-size:18px" type="button"
+      data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+      <i class="fas fa-thumbtack"></i>    Step #1 Locate Yourself</button>
+
+        <div class="collapse" id="collapseOne">
+          <div style="border-radius: 10px;  background-color:rgba(191,222,154,0.65); color:#535E80; font-size:16px">
+            <p>
+              Pin your location on the map! Click the navigation icon on the top right of the map to allow RAPIDS
+              to locate you. You can also drag the locator to finalize your location.</p>
+            </div>
+
+              <button id="update" style="color:#535E80; font-weight:bold; font-size:18px" class="btn btn-link collapsed"
+              style="color:#535E80" type="button" data-toggle="collapse" data-target="#collapseTwo"
+              aria-expanded="false" aria-controls="collapseTwo"><i class="fas fa-exchange-alt"></i>    Step #2 Purpose of Visit
+              </button>
+                <div class="collapse" id="collapseTwo">
+                  <div style="border-radius: 10px; background-color:rgba(245,173,98,0.6); color:#535E80; font-size:16px">
+                    <p>What Crops Are you Interested In?</p>
+                    <select id="purpose">
+                      <option>Corn</option>
+                      <option>Wheat</option>
+                      <option>Potato</option>
+                    </select>
+                    <div id="add"></div>
+                  </div>
+
+                  <button id="viewAll" class="btn btn-sm collapsed"
+                  style="background-color:rgba(126,191,220,0.65); color:#535E80; font-weight:bold; font-size:18px">
+                      <i class="fab fa-laravel"></i>  View All Stats
+                  </button>
+
+                <button id="findStation" class="btn btn-sm collapsed"
+                style="background-color:rgba(126,191,220,0.65); color:#535E80; font-weight:bold; font-size:18px">
+                    <i class="fab fa-laravel"></i>  Clear
+                </button>
+
+                    <p id="routttt" style="display: none; margin-top: 16px;color:#535E80; border-radius: 10px; background-color:rgba(236,233,231,0.7); font-size:16px">
+                    Placeholder</p>
+                    <p id="alllll" style="display: none; margin-top: 16px;color:#535E80; border-radius: 10px; background-color:rgba(236,233,231,0.7); font-size:16px">
+                    Placeholder!</p>
+
+                    <button class="btn btn-sm collapsed" id="route"
+                    style="display: none; background-color:rgba(245,173,98,0.6); color:#535E80; font-weight:bold; font-size:18px"
+                    type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <i class="fas fa-balance-scale"></i>  Projection</button>
+                    <div class="collapse" id="collapseThree">
+                          <p id="all" style="font-size:14px; font-style:italic; margin-top:10px">
+                            Placeholder</p>
+
+                          </div>
+              </div>
+        </div>
+      </div>
+  </div>
+
+<div id='map' class="map"></div>
+
+<div class='legend0'>
+  <h5 style="color:#535E80">Overall Crop Yields</h5>
+  <div id="pd"><h6 style="color:grey">Hover Over a County for Detail</h6></div>
+  <div><span style='background-color: #7EBFDC'><i class="fas fa-bicycle fa-sm" data-fa-transform="up-6"></i></span>Max</div>
+  <div><span><i class="fas fa-bicycle fa-sm" data-fa-transform="up-6"></i></span>Min</div>
+  <div><i class="fas fa-bicycle fa-sm"></i>  No Data</div>
+  <div style="font-size:12px">Color Shades are Proportionate to the Total Yields.</div>
+</div>
+
+<div class='legend1' style="display: none;">
+  <h5 style="color:#535E80"><span> Yield by Type</h5>
+  <div id="pd0"><h6 style="color:grey">Hover Over a County for Detail</h6></div>
+  <div><span style='background-color: #ece9e7'><i class="fas fa-bicycle fa-sm" data-fa-transform="up-6"></i></span>0</div>
+  <div><span style='background-color: #7981d0'><i class="fas fa-bicycle fa-sm" data-fa-transform="up-6"></i></span>30</div>
+</div>
+
+<script src="js/new.js"></script>
+<script src="js/decode.js"></script>
+
+
+
+</body>
+</html>
