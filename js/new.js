@@ -15,7 +15,7 @@ map.addControl(new mapboxgl.NavigationControl());
 //Get and Plot Live and historical data
 //Size and fill styling are based on bike and dock availability
 var url = 'https://raw.githubusercontent.com/RuochangH/test/0350e597361ad5a2e3ed5c2fdcb6413e79bd2bd7/Output.geojson';
-var histURL = 'https://raw.githubusercontent.com/RuochangH/test/main/gz_2010_us_050_00_500k.json';
+var histURL = 'https://raw.githubusercontent.com/CSE6242Team45/CSE6242Team45.github.io/daac90802e0893d33578dce40df8cedae1854657/final.geojson';
 
 var landingPage =function(){
 
@@ -61,9 +61,9 @@ var landingPage =function(){
         var div = window.document.createElement('div');
         div.innerHTML ='<h5 style="color:#535E80 text-align: center">Historical Crop Yield</h5><svg/>';
                 var values = e.features[0].properties;
-                var data =[values.y2005,values.y2006,values.y2007,values.y2008,values.y2009,
-                values.y2010,values.y2011,values.y2012,values.y2013,values.y2014,values.y2015,
-              values.y2016,values.y2017,values.y2018,values.y2019];
+                var data =[values.CENSUSAREA,values.blyprd08,values.blyprd09,values.blyprd10,values.blyprd11,
+                values.blyprd12,values.blyprd13,values.blyprd14,values.blyprd15,values.blyprd16,values.blyprd17,
+              values.blyprd18,values.blyprd19,values.blyprd20,values.blyprd21];
 
                 var margin = {top:20, right:50,bottom:20,left:50},
                     width = 340 - margin.left - margin.right,
@@ -260,13 +260,12 @@ $('#s0').click(function(){
 
   function readInput(){
     switch($('#purpose').find(":selected").text()){
-      case 'Corn': return 'y2015';
-      case 'Wheat':  return 'y2016';
+      case 'Corn': return 'CENSUSAREA';
+      case 'Wheat':  return 'df_field_1';
       case 'Potato': return 'y2017';}
   }
   var availability = readInput();
-  console.log(Math.min(availability))
-  console.log(Math.max(availability))
+
 
   map.removeLayer('new');
   map.addLayer({
@@ -280,6 +279,7 @@ $('#s0').click(function(){
             ["interpolate",["linear"],
             ['get',availability],
             Math.min(availability), '#ece9e7',
+
             Math.max(availability),'#7981d0'],
            
         "circle-radius":12,
