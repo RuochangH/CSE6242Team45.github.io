@@ -30,7 +30,7 @@ var landingPage =function(){
           "type":"symbol",
           "source":"history",
           "layout":{
-            "icon-image":"bicycle-15"
+            "icon-image":"garden-11"
           }
         });
         map.addLayer({
@@ -38,8 +38,8 @@ var landingPage =function(){
           "type":"fill",
           "source":"history",
           "layout":{},
-          "paint":{'fill-color':'#0080ff',
-                   'fill-opacity':0.5}
+          "paint":{'fill-color':['interpolate',['linear'],['get','CENSUSAREA'],0, '#474A2C', 300,'#636940',800,'#59A96A',6000,'#9BDEAC',8000,'#B4E7CE'],
+                   'fill-opacity':0.75}
           
         });
         map.addLayer({
@@ -138,70 +138,6 @@ map.on('load', function () {
     }, 2000);
 
     
-
-
-//Plot Live data REGULAR STYLE
-//add filter function for later use
-
-  //  map.addLayer({
-   //     "id": "liveBike",
-     //   "type": "circle",
-     //   "source": "liveBike",
-      //  "filter":["all",
-       // ['==','kioskPublicStatus','Active'],
-        //['==','isVirtual',false]],
-     // ['==','isVisible',false]],
-      //  "paint": {
-        //  "circle-stroke-width":1.5,
-          //"circle-stroke-color":'#535E80',
-           // "circle-radius": {
-             // "property":"y2015",
-            //  "stops": [
-           //[0, 0],
-          // [100, 3],
-          // [400,6],
-          // [800, 12],
-        // [1500,15],
-       //[2500,18],
-     //[4000,21]]
-       //     },
-         // "circle-color":'#7EBFDC',
-        //"circle-opacity":{
-          //"property":"y2015",
-          //'stops':[
-            //[0,0],
-            //[10,1]
-          //]
-        //}}
-        //Put live data icon beneath historical data
-   // },'hist');
-
-//Create live data HOVER STYLE
-  //  map.addLayer({
-    //    "id": "liveBike-Hover",
-      //  "type": "circle",
- //       "source": "liveBike",
-   //     "filter":
-    //["==","kioskId",""],
-      //  "paint": {
-        //  "circle-stroke-width":2.5,
-          //"circle-stroke-color":'#535E80',
-            //"circle-radius": {
-              //"property":"totalDocks",
-         //     "stops": [
-           //[0, 0],
-     //      [5, 5],
-       //    [10,8],
-         //  [15, 14],
-        // [20,17],
-   //    [25,20],
-     //[30,23]]
-       //     },
-         // "circle-color":'#7EBFDC'
-        //},
-        //put live data hover style beneath historical data
-    //},'hist');
-
     map.addLayer({
       "id":"color-Hover",
       "type":"fill",
@@ -329,23 +265,22 @@ $('#s0').click(function(){
       case 'Potato': return 'y2017';}
   }
   var availability = readInput();
+  console.log(Math.min(availability))
+  console.log(Math.max(availability))
+
   map.removeLayer('new');
   map.addLayer({
       "id": "new",
       "type": "circle",
       "source": "liveBike",
-   //   "filter":["all",
-     //   ['==','kioskPublicStatus','Active'],
-      //['==','isVirtual',false],
-   // ['==','isVisible',false]],
       "paint": {
         "circle-stroke-width":1.5,
         "circle-stroke-color":'#535E80',
           "circle-color":
             ["interpolate",["linear"],
             ['get',availability],
-              0, '#ece9e7',
-           4000,'#7981d0'],
+            Math.min(availability), '#ece9e7',
+            Math.max(availability),'#7981d0'],
            
         "circle-radius":12,
       "circle-opacity":0.7}
@@ -394,11 +329,7 @@ $('#s0').click(function(){
       map.setFilter("new-Hover",["==","GEO_ID",""]);
       map.getCanvas().style.cursor = '';});
 
-  //calculate available station according to user input
 
-  //$(document).ready(function(){
-
-  //})
     $.ajax({method: 'GET',url:url,}).done(function(data){
       var filteredFeatures = data.features.filter(function(feature){
         return feature.properties[availability]>1;
@@ -423,9 +354,6 @@ $('#s0').click(function(){
   });
 
   map.addControl(geolocate);
-  //setTimeout(function() {
-  //    $(".mapboxgl-ctrl-geolocate").click();
-//  },5000);
 
 
 var user=[0,0];
@@ -521,18 +449,6 @@ function onUp(e) {
         map.on('touchmove', onMove);
         map.once('touchend', onUp);
           });
-
-          //Update Map view with filtered station availability according to user input
-          /*
-          $('#update').click(function(){
-
-            map.removeLayer('liveBike');
-            map.removeLayer('liveBike-Hover');
-            $('.legend0').hide();
-            $('.legend1').show();
-
-          });
-          */
 
           //read user input
           $('#findStation').click(function(){
