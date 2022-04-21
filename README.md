@@ -31,7 +31,6 @@ $ cd CSE6242Team45.github.io.git
 ```
 Make the desired modifications and host the code in your own git repo (see more instructions in the **Project Host** section below).
 
-
 <br />
 
 ![Screen Capture.](/screencaptures/dashboard1.png)
@@ -42,13 +41,16 @@ Make the desired modifications and host the code in your own git repo (see more 
 
 The app is hosted by **[GitHub Pages](https://pages.github.com/)**.
 
-General steps to host any project on **GitHub Pages**
+<br />
+
+> General steps to host any project on **GitHub Pages**:
 
 - [Create a repo](https://github.com/new) on GitHub
 - Clone the repository
 - Add, commit, and push your files (e.g., HTML)
 - Open a browser and go to https://username.github.io
 
+<br />
 
 ## ✨ Code-base structure
 
@@ -108,7 +110,6 @@ The project is coded using blueprints, app factory pattern, dual configuration p
    |
    |-- ************************************************************************
 ```
-
 <br />
 
 ## ✨ Credits & Links
