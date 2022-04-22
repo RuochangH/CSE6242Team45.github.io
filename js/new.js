@@ -267,18 +267,19 @@ $('#s0').click(function(){
   var availability = readInput();
 
 
+
   map.removeLayer('new');
   map.addLayer({
       "id": "new",
       "type": "circle",
-      "source": "liveBike",
+      "source": "history",
       "paint": {
         "circle-stroke-width":1.5,
         "circle-stroke-color":'#535E80',
           "circle-color":
             ["interpolate",["linear"],
             ['get',availability],
-            Math.min(availability), '#ece9e7',
+            Math.min(features[0].properties[availability]), '#ece9e7',
 
             Math.max(availability),'#7981d0'],
            
