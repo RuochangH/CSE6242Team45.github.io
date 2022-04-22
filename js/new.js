@@ -53,6 +53,7 @@ var landingPage =function(){
         });
     });
     
+
     //Create click Event
     map.on('click', 'hist', function (e) {
       map.flyTo({center: e.features[0].geometry.coordinates[0][0]});
@@ -131,17 +132,13 @@ var landingPage =function(){
 
 map.on('load', function () {
   //Get Live data
-    map.addSource('liveBike', { type: 'geojson', data: url})
-
-    window.setInterval(function() {
-        map.getSource('liveBike').setData(url);
-    }, 2000);
+    map.addSource('history2', { type: 'geojson', data: histURL})
 
     
     map.addLayer({
       "id":"color-Hover",
       "type":"fill",
-      "source":"history",
+      "source":"history2",
       "layout":{},
       "filter":
       ["==","GEO_ID",""],
