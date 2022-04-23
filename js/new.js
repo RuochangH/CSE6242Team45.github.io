@@ -227,7 +227,49 @@ map.on('load', function () {
 
 landingPage();
 
+// Download Function
+$('#download').click(function(){
+  function readInput(){
+    switch($('#crops').find(":selected").text()){
+      case 'Barley': return 'BARLEY';
+      case 'Corn':  return 'CORN';
+      case 'Potato': return 'POTATOES';
+      case 'Soybean': return 'SOYBEANS';
+      case 'Wheat': return 'WHEAT'}
+  }
+  var crop = readInput();
+  var download_link = document.createElement("a");
+  download_link.href = 'data/'+crop+'_price_prediction_data.csv';
+  document.body.appendChild(download_link);
+  download_link.click();
+  document.body.removeChild(download_link);
+  delete download_link;
+  var csv_path = 'data/'+crop+'_price_prediction_data.csv';
+  d3.csv(csv_path,function(data){
+    var filteredData = data.filter(function(d){
+      {if(d["month"]==8){console.log(d);return d;}}
+    })
+  })
 
+  // var newData
+  // d3.csv(csv_path, function(data) {
+  //   filteredData = data.filter(function(row){
+  //     return (row["month"] == 8);
+  //   });
+  //   newData = filteredData.map(function(d){
+  //     return {
+  //       "state_fips_code":d.state_fips_code,
+  //       "formatted_date":d.formmated_date,
+  //       "unit_desc":d.unit_desc,
+  //       "Value":d.Value
+
+  //     }
+  //   })
+  //   console.log(newData);
+  // })
+
+
+})
 
 
   //Allow user to check selected types of availabilities without accessing there locations
