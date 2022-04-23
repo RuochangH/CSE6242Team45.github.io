@@ -231,7 +231,18 @@ $('#download').click(function(){
       case 'Wheat': return 'WHEAT'}
   }
   var crop = readInput();
-
+function takeScreenshot(map) {
+  return new Promise(function(resolve, reject) {
+    map.once("render", function() {
+        map.on('load', async function () {
+            await sleep(2000);
+            resolve(map.getCanvas().toDataURL());
+        })
+    });
+    /* trigger render */
+    map.setBearing(map.getBearing());
+  })
+}
   function readTime(){
     switch($('#time').find(":selected").text()){
       case '2022 Mar': return 'Mar2022';
