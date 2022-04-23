@@ -238,6 +238,69 @@ $('#download').click(function(){
       case 'Wheat': return 'WHEAT'}
   }
   var crop = readInput();
+
+  function readTime(){
+    switch($('#time').find(":selected").text()){
+      case '2022 Mar': return 'Mar2022';
+      case '2022 Apr':  return 'Apr2022';
+      case '2022 May': return 'May2022';
+      case '2022 Jun':  return 'Jun2022';
+      case '2022 Jul': return 'Jul2022';
+      case '2022 Aug': return 'Aug2022';
+      case '2022 Sept': return 'Sept2022';
+      case '2022 Oct': return 'Oct2022';
+      case '2022 Nov': return 'Nov2022';
+      case '2022 Dec': return 'Dec2022';
+      case '2023 Jan': return 'Jan2023';
+      case '2023 Feb': return 'Feb2023';
+      case '2023 Mar': return 'Mar2023';
+      case '2023 Apr':  return 'Apr2023';
+      case '2023 May': return 'May2023';
+      case '2023 Jun':  return 'Jun2023';
+      case '2023 Jul': return 'Jul2023';
+      case '2023 Aug': return 'Aug2023';
+      case '2023 Sept': return 'Sept2023';
+      case '2023 Oct': return 'Oct2023';
+      case '2023 Nov': return 'Nov2023';
+      case '2023 Dec': return 'Dec2023';
+      case '2024 Jan': return 'Jan2024';
+      case '2024 Feb': return 'Feb2024';
+      case '2024 Mar': return 'Mar2024';
+      case '2024 Apr':  return 'Apr2024';
+      case '2024 May': return 'May2024';
+      case '2024 Jun':  return 'Jun2024';
+      case '2024 Jul': return 'Jul2024';
+      case '2024 Aug': return 'Aug2024';
+      case '2024 Sept': return 'Sept2024';
+      case '2024 Oct': return 'Oct2024';
+      case '2024 Nov': return 'Nov2024';
+      case '2024 Dec': return 'Dec2024';
+      case '2025 Jan': return 'Jan2025';
+      case '2025 Feb': return 'Feb2025';
+      case '2025 Mar': return 'Mar2025';
+      case '2025 Apr':  return 'Apr2025';
+      case '2025 May': return 'May2025';
+      case '2025 Jun':  return 'Jun2025';
+      case '2025 Jul': return 'Jul2025';
+      case '2025 Aug': return 'Aug2025';
+      case '2025 Sept': return 'Sept2025';
+      case '2025 Oct': return 'Oct2025';
+      case '2025 Nov': return 'Nov2025';
+      case '2025 Dec': return 'Dec2025';
+      case '2026 Jan': return 'Jan2026';
+      case '2026 Feb': return 'Feb2026';
+      case '2026 Mar': return 'Mar2026';
+      case '2026 Apr':  return 'Apr2026';
+      case '2026 May': return 'May2026';
+      case '2026 Jun':  return 'Jun2026';
+      case '2026 Jul': return 'Jul2026';
+      case '2026 Aug': return 'Aug2026';
+      case '2026 Sept': return 'Sept2026';
+      case '2026 Oct': return 'Oct2026';
+      case '2026 Nov': return 'Nov2026';
+      case '2026 Dec': return 'Dec2026';}
+  }
+  var time = readTime();
   var download_link = document.createElement("a");
   download_link.href = 'data/'+crop+'_price_prediction_data.csv';
   document.body.appendChild(download_link);
@@ -247,7 +310,8 @@ $('#download').click(function(){
   var csv_path = 'data/'+crop+'_price_prediction_data.csv';
   d3.csv(csv_path,function(data){
     var filteredData = data.filter(function(d){
-      {if(d["month"]==8){console.log(d);return d;}}
+      {if(d["formatted_date"]==time){return d;}}
+    console.log(filteredData);
     })
   })
 
