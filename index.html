@@ -2,11 +2,10 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>RAPIDS CSE6242 by Team45</title>
+    <title>HARD Tool CSE6242 by Team45</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=yes' />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" integrity="sha256-iYUgmrapfDGvBrePJPrMWQZDcObdAcStKBpjP3Az+3s=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/14e7d6df27.js" crossorigin="anonymous"></script>   
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
@@ -32,95 +31,49 @@
 
   <div class="sidebar">
     <div id="title">
-      <h1 id="solid" style="color:#7EBFDC"><i class="fa-solid fa-wheat-awn"></i></h1>
+      <h1 id="solid" style="color:#9BDEAC"><i class="fa-solid fa-wheat-awn fa-2x"></i></h1>
       <div id="shades">
-        <h1 id="shade1" style="color:#7EBFDC"><i class="fa-solid fa-wheat-awn"></i></h1>
-        <h1 id="shade2" style="color:#7EBFDC"><i class="fa-solid fa-wheat-awn"></i></h1>
+        <h1 id="shade1" style="color:#9BDEAC"><i class="fa-solid fa-wheat-awn fa-2x"></i></h1>
+        <h1 id="shade2" style="color:#B4E7CE"><i class="fa-solid fa-wheat-awn fa-2x"></i></h1>
       </div>
-      <h1 id="name" style="color:#535E80">RAPIDS Tool</h1>
+      <h1 id="name" style="color:#474A2C">Hedging Agricultural Risk Dashboard</h1>
     </div>
 
     <div class="intro">
-      <h3 style="color:#F5AD62; font-weight: bold">Introduction</h3>
-      <p style="font-size:15px">Placeholder introduction of the project.</p>
-      <p style="font-size:15px">Placeholder introduction of the tool functionality. </p>
-      <p style="font-size:15px; font-style:italic">Before start, you can view both the current and historical overall crops yield by mouseover or click</p>
-      <button id="s0"> Get Started! </button>
+     
+      <p style="font-size:15px">Farming is a financially risky occupation. On a daily basis, farmers are confronted with an ever-changing landscape of possible price, 
+        yield, and other outcomes that affect their fanancial returns and overall welfare. Currently, farmers respond to these uncerntain and random risks based on previous experience,
+        which is costy and lagging behind. This also creates additional chanllenges for a quarter of the farmers, who have less than five years of experience.</p>
+      <p style="font-size:15px">The purpose of this Hedging Agrichultural Risk Dashboard is to provide farmers and ranchers a data-driven tool to plan for the future risks ahead. The dashboard provides
+        an estimated price by month over the next five years and a summary of the historical yield. Farmers and ranchers can interacte with the dashboard and find the information they need. </p>
     </div>
 
-      <div id="process" style="display: none;">
-        <p style="font-size:14px; font-style:italic" >Placeholder for instructions.</p>
-      <button id="locate" class="btn btn-link collapsed" style="color:#535E80; font-weight:bold; font-size:18px" type="button"
-      data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-      <i class="fas fa-thumbtack"></i>    Step #1 Locate Yourself</button>
 
-        <div class="collapse" id="collapseOne">
-          <div style="border-radius: 10px;  background-color:rgba(191,222,154,0.65); color:#535E80; font-size:16px">
-            <p>
-              Pin your location on the map! Click the navigation icon on the top right of the map to allow RAPIDS
-              to locate you. You can also drag the locator to finalize your location.</p>
-            </div>
-
-              <button id="update" style="color:#535E80; font-weight:bold; font-size:18px" class="btn btn-link collapsed"
-              style="color:#535E80" type="button" data-toggle="collapse" data-target="#collapseTwo"
-              aria-expanded="false" aria-controls="collapseTwo"><i class="fas fa-exchange-alt"></i>    Step #2 Purpose of Visit
-              </button>
-                <div class="collapse" id="collapseTwo">
-                  <div style="border-radius: 10px; background-color:rgba(245,173,98,0.6); color:#535E80; font-size:16px">
-                    <p>What Crops Are you Interested In?</p>
-                    <select id="purpose">
-                      <option>Corn</option>
-                      <option>Wheat</option>
-                      <option>Potato</option>
-                    </select>
-                    <div id="add"></div>
-                  </div>
-
-                  <button id="viewAll" class="btn btn-sm collapsed"
-                  style="background-color:rgba(126,191,220,0.65); color:#535E80; font-weight:bold; font-size:18px">
-                      <i class="fab fa-laravel"></i>  View All Stats
-                  </button>
-
-                <button id="findStation" class="btn btn-sm collapsed"
-                style="background-color:rgba(126,191,220,0.65); color:#535E80; font-weight:bold; font-size:18px">
-                    <i class="fab fa-laravel"></i>  Clear
-                </button>
-
-                    <p id="routttt" style="display: none; margin-top: 16px;color:#535E80; border-radius: 10px; background-color:rgba(236,233,231,0.7); font-size:16px">
-                    Placeholder</p>
-                    <p id="alllll" style="display: none; margin-top: 16px;color:#535E80; border-radius: 10px; background-color:rgba(236,233,231,0.7); font-size:16px">
-                    Placeholder!</p>
-
-                    <button class="btn btn-sm collapsed" id="route"
-                    style="display: none; background-color:rgba(245,173,98,0.6); color:#535E80; font-weight:bold; font-size:18px"
-                    type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    <i class="fas fa-balance-scale"></i>  Projection</button>
-                    <div class="collapse" id="collapseThree">
-                          <p id="all" style="font-size:14px; font-style:italic; margin-top:10px">
-                            Placeholder</p>
-
-                          </div>
-              </div>
-        </div>
+      <div id="prediction" style="border-radius: 10px; background-color:rgba(180,231,206,0.6); color:#474A2C; font-size:16px">
+      <p>To start with, choose the crop you are interseted in?</p>
+      <select id="crops">
+        <option>Barley</option>
+        <option>Corn</option>
+        <option>Potato</option>
+        <option>Soybean</option>
+        <option>Wheat</option>
+      </select>
+      <button id="viewAll" class="btn btn-sm collapsed"
+      style="background-color:rgba(180,231,206,0.1); color:#474A2C; font-weight:bold; font-size:18px">
+      <i class="fa-solid fa-play"></i>  Predict! </button>
       </div>
+
   </div>
 
 <div id='map' class="map"></div>
 
 <div class='legend0'>
-  <h5 style="color:#535E80">Overall Crop Yields</h5>
+  <h5 style="color:#474A2C">Predicted Price</h5>
   <div id="pd"><h6 style="color:grey">Hover Over a County for Detail</h6></div>
-  <div><span style='background-color: #7EBFDC'><i class="fas fa-bicycle fa-sm" data-fa-transform="up-6"></i></span>Max</div>
-  <div><span><i class="fas fa-bicycle fa-sm" data-fa-transform="up-6"></i></span>Min</div>
-  <div><i class="fas fa-bicycle fa-sm"></i>  No Data</div>
-  <div style="font-size:12px">Color Shades are Proportionate to the Total Yields.</div>
-</div>
-
-<div class='legend1' style="display: none;">
-  <h5 style="color:#535E80"><span> Yield by Type</h5>
-  <div id="pd0"><h6 style="color:grey">Hover Over a County for Detail</h6></div>
-  <div><span style='background-color: #ece9e7'><i class="fas fa-bicycle fa-sm" data-fa-transform="up-6"></i></span>0</div>
-  <div><span style='background-color: #7981d0'><i class="fas fa-bicycle fa-sm" data-fa-transform="up-6"></i></span>30</div>
+  <div><span style='background-color: #B4E7CE'><i class="fa-solid fa-wheat-awn" data-fa-transform="grow-6"></i></span>Higher than $20</div>
+  <div><span style='background-color: #B4E7CE'><i class="fa-solid fa-wheat-awn" data-fa-transform="up-6"></i></span> Less than $5</div>
+  <div><i class="fa-solid fa-wheat-awn"></i>  No Data</div>
+  <div style="font-size:12px">Color Shades are Proportionate to the Predicted Price.</div>
 </div>
 
 <script src="js/new.js"></script>

@@ -15,20 +15,22 @@ map.addControl(new mapboxgl.NavigationControl());
 //Get and Plot Live and historical data
 //Size and fill styling are based on bike and dock availability
 var url = 'https://raw.githubusercontent.com/RuochangH/test/0350e597361ad5a2e3ed5c2fdcb6413e79bd2bd7/Output.geojson';
-var histURL = 'https://raw.githubusercontent.com/CSE6242Team45/CSE6242Team45.github.io/daac90802e0893d33578dce40df8cedae1854657/final.geojson';
+var predURL = 'https://raw.githubusercontent.com/CSE6242Team45/CSE6242Team45.github.io/main/PricePred.geojson';
 
 var landingPage =function(){
 
 // Get and plot historical data as icons
 //later used to provide historical information on click
-    $.ajax(histURL).done(function(data) {
+    $.ajax(predURL).done(function(data) {
       var parsedData = JSON.parse(data);
         //plot
-        map.addSource('history',{type:'geojson',data:parsedData});
+        map.addSource('pred',{type:'geojson',data:parsedData});
         map.addLayer({
-          "id":"hist",
+          "id":"prediction",
           "type":"symbol",
-          "source":"history",
+          "source":"pred",
+          "filter":
+          ["==","Field2","Corn"],
           "layout":{
             "icon-image":"garden-11"
           }
@@ -36,16 +38,18 @@ var landingPage =function(){
         map.addLayer({
           "id":"color",
           "type":"fill",
-          "source":"history",
+          "source":"pred",
+          "filter":
+          ["==","Field2","Corn"],
           "layout":{},
-          "paint":{'fill-color':['interpolate',['linear'],['get','CENSUSAREA'],0, '#474A2C', 300,'#636940',800,'#59A96A',6000,'#9BDEAC',8000,'#B4E7CE'],
+          "paint":{'fill-color':['interpolate',['linear'],['get','26_Dec'],0, '#474A2C', 5,'#636940',10,'#59A96A',15,'#9BDEAC',20,'#B4E7CE'],
                    'fill-opacity':0.75}
           
         });
         map.addLayer({
           "id":"outline",
           "type":"line",
-          "source":"history",
+          "source":"pred",
           "layout":{},
           "paint":{'line-color':'gray',
                    'line-width':2}
@@ -55,16 +59,18 @@ var landingPage =function(){
     
 
     //Create click Event
-    map.on('click', 'hist', function (e) {
+    map.on('click', 'prediction', function (e) {
       map.flyTo({center: e.features[0].geometry.coordinates[0][0]});
       var coordinates = e.features[0].geometry.coordinates.slice()[0][0];
   
         var div = window.document.createElement('div');
-        div.innerHTML ='<h5 style="color:#535E80 text-align: center">Historical Crop Yield</h5><svg/>';
+        div.innerHTML ='<h5 style="color:#535E80 text-align: center">Five Year Price Prediction by Month</h5><svg/>';
                 var values = e.features[0].properties;
-                var data =[values.CENSUSAREA,values.blyprd08,values.blyprd09,values.blyprd10,values.blyprd11,
-                values.blyprd12,values.blyprd13,values.blyprd14,values.blyprd15,values.blyprd16,values.blyprd17,
-              values.blyprd18,values.blyprd19,values.blyprd20,values.blyprd21];
+                var data =[values['22_Mar'],values['22_Apr'],values['22_May'],values['22_Jun'],values['22_Jul'],values['22_Aug'],values['22_Sep'],values['22_Oct'],values['22_Nov'],values['22_Dec'],values['23_Jan'],values['23_Feb'],
+                values['23_Mar'],values['23_Apr'],values['23_May'],values['23_Jun'],values['23_Jul'],values['23_Aug'],values['23_Sep'],values['23_Oct'],values['23_Nov'],values['23_Dec'],values['24_Jan'],values['24_Feb'],
+                values['24_Mar'],values['24_Apr'],values['24_May'],values['24_Jun'],values['24_Jul'],values['24_Aug'],values['24_Sep'],values['24_Oct'],values['24_Nov'],values['24_Dec'],values['25_Jan'],values['25_Feb'],
+                values['25_Mar'],values['25_Apr'],values['25_May'],values['25_Jun'],values['25_Jul'],values['25_Aug'],values['25_Sep'],values['25_Oct'],values['25_Nov'],values['25_Dec'],values['26_Jan'],values['26_Feb'],
+                values['26_Mar'],values['26_Apr'],values['26_May'],values['26_Jun'],values['26_Jul'],values['26_Aug'],values['26_Sep'],values['26_Oct'],values['26_Nov'],values['26_Dec']];
 
                 var margin = {top:20, right:50,bottom:20,left:50},
                     width = 340 - margin.left - margin.right,
@@ -73,7 +79,7 @@ var landingPage =function(){
 
                     var y0 = Math.max(Math.abs(d3.min(data)), Math.abs(d3.max(data)));
                     var y = d3.scale.linear()
-                      .domain([-y0, y0])
+                      .domain([0, y0])
                       .range([height,0])
                       .nice();
 
@@ -91,7 +97,6 @@ var landingPage =function(){
                       .scale(y)
                       .orient("left");
 
-
                     var bar = svg.selectAll("g.bar")
                     .data(data)
                     .enter().append("g");
@@ -104,11 +109,11 @@ var landingPage =function(){
                     .attr("width", x.rangeBand());
 
                     svg.append("g")
-                    .attr("class", "x axis")
-                    .call(yAxis);
+                    .attr("class", "y axis")
+                    .call(yAxis)
 
                     svg.append("g")
-                    .attr("class", "y axis")
+                    .attr("class", "x axis")
                     .append("line")
                     .attr("y1", y(0))
                     .attr("y2", y(0))
@@ -131,17 +136,16 @@ var landingPage =function(){
 
 
 map.on('load', function () {
-  //Get Live data
-    map.addSource('history2', { type: 'geojson', data: histURL})
+    //map.addSource('pred', { type: 'geojson', data: predURL})
 
     
     map.addLayer({
       "id":"color-Hover",
       "type":"fill",
-      "source":"history2",
+      "source":"pred",
       "layout":{},
       "filter":
-      ["==","GEO_ID",""],
+      ["==","GEOID",""],
       "paint":{'fill-color':'#0080ff',
                'fill-opacity':1}
       
@@ -149,37 +153,35 @@ map.on('load', function () {
     map.addLayer({
       "id":"outline-Hover",
       "type":"line",
-      "source":"history",
+      "source":"pred",
       "layout":{},
       "filter":
-      ["==","GEO_ID",""],
+      ["==","GEOID",""],
       "paint":{'line-color':'black',
                'line-width':2}
       
     });
 
 //Hover Effect
-    map.on('mouseenter', 'hist', function(e) {
+    map.on('mouseenter', 'prediction', function(e) {
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
-        map.setFilter("color-Hover",["==","GEO_ID",e.features[0].properties.GEO_ID]);
-        map.setFilter("outline-Hover",["==","GEO_ID",e.features[0].properties.GEO_ID]);
+        map.setFilter("color-Hover",["==","GEOID",e.features[0].properties.GEOID]);
+        map.setFilter("outline-Hover",["==","GEOID",e.features[0].properties.GEOID]);
         var coordinates = e.features[0].geometry.coordinates.slice()[0][0];
         var description = "<strong>"+e.features[0].properties.NAME + " County</strong><br>"+
-        e.features[0].properties.y2015 +" Corn<br>"+
-        e.features[0].properties.y2016 +" Wheat";
-
+        " $"+ e.features[0].properties['26_Dec']+"<br>";
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
         }
         var station = map.queryRenderedFeatures(e.point, {
-          layers: ['hist']
+          layers: ['prediction']
         });
 
           if (station.length > 0) {
             document.getElementById('pd').innerHTML = description;
           } else {
-            document.getElementById('pd').innerHTML = '<p>Hover Over a County for Detail!</p>';
+            document.getElementById('pd').innerHTML = '<p>Hover Over a State for Detail!</p>';
           }
 
     });
@@ -188,7 +190,7 @@ map.on('load', function () {
         map.setFilter("color-Hover",["==","GEO_ID",""]);
         map.setFilter("outline-Hover",["==","GEO_ID",""]);
         map.getCanvas().style.cursor = '';
-        //popup.remove();
+        popup.remove();
     });
 
 });
@@ -197,108 +199,39 @@ map.on('load', function () {
 landingPage();
 
 
-//Start to use the application; Set the Second Page
-$('#s0').click(function(){
-  $('.intro').hide();
-  $('#process').show();
 
-  $('#locate').click(function(){
-
-    $('.legend1').hide();
-    map.removeLayer('new');
-    map.removeLayer('new-Hover');
-    if(map.getLayer('nearest')){
-    map.removeLayer('nearest');
-    map.removeSource('coorr');}
-
-    if(map.getLayer('balance')){
-    map.removeLayer('balance');
-    map.removeSource('coorr2');}
-
-    if(map.getLayer('route')){
-    map.removeLayer('route');
-    map.removeSource('route');}
-
-    if(map.getLayer('route2')){
-    map.removeLayer('route2');
-    map.removeSource('route2');}
-  });
-
-  $('#update').click(function(){
-  map.removeLayer('color');
-  map.removeLayer('color-Hover');
-  map.removeLayer('outline');
-  map.removeLayer('outline-Hover');
-  map.removeLayer('hist');
-});
 
   //Allow user to check selected types of availabilities without accessing there locations
   $('#viewAll').click(function(){
-    if(map.getLayer('nearest')){
-    map.removeLayer('nearest');
-    map.removeSource('coorr');}
-
-    if(map.getLayer('balance')){
-    map.removeLayer('balance');
-    map.removeSource('coorr2');}
-
-    if(map.getLayer('route')){
-    map.removeLayer('route');
-    map.removeSource('route');}
-
-    if(map.getLayer('route2')){
-    map.removeLayer('route2');
-    map.removeSource('route2');}
-    $('.legend0').hide();
-    $('.legend1').show();
-    $('#routttt').hide();
-    $('#alllll').show();
-    $('#route').show();
-
-  function readInput(){
-    switch($('#purpose').find(":selected").text()){
-      case 'Corn': return 'CENSUSAREA';
-      case 'Wheat':  return 'df_field_1';
-      case 'Potato': return 'y2017';}
+    
+    function readInput(){
+      switch($('#prediction').find(":selected").text()){
+        case 'Barley': return 'Barley';
+        case 'Corn':  return 'Corn';
+        case 'Potato': return 'Potato';
+        case 'Soybean': return 'Soybean';
+        case 'Wheat': return 'Wheat'}
   }
-  var availability = readInput();
-
-
-
-  map.removeLayer('new');
-  map.addLayer({
-      "id": "new",
-      "type": "circle",
-      "source": "history",
-      "paint": {
-        "circle-stroke-width":1.5,
-        "circle-stroke-color":'#535E80',
-          "circle-color":
-            ["interpolate",["linear"],
-            ['get',availability],
-            Math.min(features[0].properties[availability]), '#ece9e7',
-
-            Math.max(availability),'#7981d0'],
-           
-        "circle-radius":12,
-      "circle-opacity":0.7}
+    var availability = readInput();
+    
+    if(map.getLayer('color')){map.removeLayer('color');}
+    if(map.getLayer('new')){
+      map.removeLayer('new');}
+    map.addLayer({
+      "id":"new",
+      "type":"fill",
+      "source":"pred",
+      "filter":
+      ["==","Field2",availability],
+      "layout":{},
+      "paint":{'fill-color':['interpolate',['linear'],['get','26_Dec'],0, '#474A2C', 5,'#636940',10,'#59A96A',15,'#9BDEAC',20,'#B4E7CE'],
+               'fill-opacity':0.75}
+      
+    });
+ 
   });
 
-  map.addLayer({
-      "id": "new-Hover",
-      "type": "circle",
-      "source": "liveBike",
-      "filter":["==","GEO_ID",""],
-      "paint": {
-        "circle-stroke-width":2,
-        "circle-stroke-color":'#535E80',
-          "circle-color":
-            ["interpolate",["linear"],
-            ['get',availability],
-              0, '#ece9e7',
-           4000,'#7981d0'],
-        "circle-radius":14}
-  });
+ 
 
   map.on('mouseenter', 'new', function(e) {
       // Change the cursor style as a UI indicator.
@@ -340,7 +273,7 @@ $('#s0').click(function(){
       console.log(filteredFeatureCollection);
       map.getSource('liveBike').setData(filteredFeatureCollection);
     });
-  });
+
 
     //Add geolocator
   var geolocate= new mapboxgl.GeolocateControl({
@@ -705,4 +638,4 @@ function onUp(e) {
           });
     });
 });
-});
+
