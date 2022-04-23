@@ -71,6 +71,13 @@ var landingPage =function(){
                 values['24_Mar'],values['24_Apr'],values['24_May'],values['24_Jun'],values['24_Jul'],values['24_Aug'],values['24_Sep'],values['24_Oct'],values['24_Nov'],values['24_Dec'],values['25_Jan'],values['25_Feb'],
                 values['25_Mar'],values['25_Apr'],values['25_May'],values['25_Jun'],values['25_Jul'],values['25_Aug'],values['25_Sep'],values['25_Oct'],values['25_Nov'],values['25_Dec'],values['26_Jan'],values['26_Feb'],
                 values['26_Mar'],values['26_Apr'],values['26_May'],values['26_Jun'],values['26_Jul'],values['26_Aug'],values['26_Sep'],values['26_Oct'],values['26_Nov'],values['26_Dec']];
+                var predmonth = [];
+                for (var yr=2022; yr < 2027; yr++){
+                  for(var mth=1; mth < 13; mth++){
+                    predmonth.push(new Date(mth+"/01/"+yr));
+                  }
+                }
+                predmonth = predmonth.slice(2);
 
                 var margin = {top:20, right:50,bottom:20,left:50},
                     width = 340 - margin.left - margin.right,
@@ -83,9 +90,13 @@ var landingPage =function(){
                       .range([height,0])
                       .nice();
 
-                    var x = d3.scale.ordinal()
-                      .domain(d3.range(data.length))
-                      .rangeRoundBands([0, width], 0.2);
+                    var timescale = d3.time.scale()
+                      .range([1.5,width-1.5])
+                      .domain(d3.extent(predmonth));
+
+                    var x = d3.scale.linear()
+                      .domain([0,data.length])
+                      .range([0, width]);
 
                     var svg = d3.select(div).select("svg")
                         .attr("width", width + margin.left + margin.right)
@@ -97,6 +108,12 @@ var landingPage =function(){
                       .scale(y)
                       .orient("left");
 
+                    var xAxis = d3.svg.axis()
+                      .scale(timescale)
+                      .ticks(d3.time.month,6)
+                      .tickFormat(d3.time.format('%b %y'))
+                      .orient("bottom");
+
                     var bar = svg.selectAll("g.bar")
                     .data(data)
                     .enter().append("g");
@@ -106,19 +123,33 @@ var landingPage =function(){
                     .attr("y", function(d) { return y(Math.max(0, d)); })
                     .attr("x", function(d, i) { return x(i); })
                     .attr("height", function(d) { return Math.abs(y(d) - y(0)); })
-                    .attr("width", x.rangeBand());
+                    .attr("width", 3);
 
-                    svg.append("g")
+                  svg.append("g")
                     .attr("class", "y axis")
                     .call(yAxis)
+                    .append("text").text("Price ($)")
+                    .attr("transform","rotate(-90)")
+                    .attr("text-anchor","middle")
+                    .attr("x",-height/2)
+                    .attr("y",0)
+                    .attr("dy","-3em");
 
-                    svg.append("g")
+                  svg.append("g")
                     .attr("class", "x axis")
-                    .append("line")
-                    .attr("y1", y(0))
-                    .attr("y2", y(0))
-                    .attr("x1", 0)
-                    .attr("x2", width);
+                    .attr("transform","translate(0,"+height+")")
+                    .call(xAxis)
+                    .selectAll("text")
+                    .attr("transform","rotate(-20)")
+                    .attr("text-anchor","middle")
+                    
+                  // svg.append("g")
+                  //   .attr("class", "x axis")
+                  //   .append("line")
+                  //   .attr("y1", y(0))
+                  //   .attr("y2", y(0))
+                  //   .attr("x1", 0)
+                  //   .attr("x2", width);
 
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
@@ -388,7 +419,13 @@ landingPage();
                   values['24_Mar'],values['24_Apr'],values['24_May'],values['24_Jun'],values['24_Jul'],values['24_Aug'],values['24_Sep'],values['24_Oct'],values['24_Nov'],values['24_Dec'],values['25_Jan'],values['25_Feb'],
                   values['25_Mar'],values['25_Apr'],values['25_May'],values['25_Jun'],values['25_Jul'],values['25_Aug'],values['25_Sep'],values['25_Oct'],values['25_Nov'],values['25_Dec'],values['26_Jan'],values['26_Feb'],
                   values['26_Mar'],values['26_Apr'],values['26_May'],values['26_Jun'],values['26_Jul'],values['26_Aug'],values['26_Sep'],values['26_Oct'],values['26_Nov'],values['26_Dec']];
-  
+                  var predmonth = [];
+                  for (var yr=2022; yr < 2027; yr++){
+                    for(var mth=1; mth < 13; mth++){
+                      predmonth.push(new Date(mth+"/01/"+yr));
+                    }
+                  }
+                  predmonth = predmonth.slice(2);
                   var margin = {top:20, right:50,bottom:20,left:50},
                       width = 340 - margin.left - margin.right,
                       height = 200 - margin.top - margin.bottom,
@@ -400,9 +437,13 @@ landingPage();
                         .range([height,0])
                         .nice();
   
-                      var x = d3.scale.ordinal()
-                        .domain(d3.range(data.length))
-                        .rangeRoundBands([0, width], 0.2);
+                      var timescale = d3.time.scale()
+                        .range([1.5,width-1.5])
+                        .domain(d3.extent(predmonth));
+  
+                      var x = d3.scale.linear()
+                        .domain([0,data.length])
+                        .range([0, width]);
   
                       var svg = d3.select(div).select("svg")
                           .attr("width", width + margin.left + margin.right)
@@ -413,7 +454,13 @@ landingPage();
                       var yAxis = d3.svg.axis()
                         .scale(y)
                         .orient("left");
-  
+
+                      var xAxis = d3.svg.axis()
+                        .scale(timescale)
+                        .ticks(d3.time.month,6)
+                        .tickFormat(d3.time.format('%b %y'))
+                        .orient("bottom");  
+                        
                       var bar = svg.selectAll("g.bar")
                       .data(data)
                       .enter().append("g");
@@ -423,19 +470,33 @@ landingPage();
                       .attr("y", function(d) { return y(Math.max(0, d)); })
                       .attr("x", function(d, i) { return x(i); })
                       .attr("height", function(d) { return Math.abs(y(d) - y(0)); })
-                      .attr("width", x.rangeBand());
-  
+                      .attr("width", 3);
+
                       svg.append("g")
-                      .attr("class", "y axis")
-                      .call(yAxis)
-  
+                        .attr("class", "y axis")
+                        .call(yAxis)
+                        .append("text").text("Price ($)")
+                        .attr("transform","rotate(-90)")
+                        .attr("text-anchor","middle")
+                        .attr("x",-height/2)
+                        .attr("y",0)
+                        .attr("dy","-3em");
+    
                       svg.append("g")
-                      .attr("class", "x axis")
-                      .append("line")
-                      .attr("y1", y(0))
-                      .attr("y2", y(0))
-                      .attr("x1", 0)
-                      .attr("x2", width);
+                        .attr("class", "x axis")
+                        .attr("transform","translate(0,"+height+")")
+                        .call(xAxis)
+                        .selectAll("text")
+                        .attr("transform","rotate(-20)")
+                        .attr("text-anchor","middle")
+                        
+                      // svg.append("g")
+                      //   .attr("class", "x axis")
+                      //   .append("line")
+                      //   .attr("y1", y(0))
+                      //   .attr("y2", y(0))
+                      //   .attr("x1", 0)
+                      //   .attr("x2", width);
   
           // Ensure that if the map is zoomed out such that multiple
           // copies of the feature are visible, the popup appears
