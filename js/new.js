@@ -310,8 +310,8 @@ $('#download').click(function(){
   var csv_path = 'data/'+crop+'_price_prediction_data.csv';
   d3.csv(csv_path,function(data){
     var filteredData = data.filter(function(d){
-      {if(d["formatted_date"]==time){return d;}}
-    console.log(filteredData);
+      {if(d["formatted_date"]==time){return d;}};
+    // console.log(filteredData);
     })
   })
 
