@@ -14,7 +14,7 @@ map.addControl(new mapboxgl.NavigationControl());
 
 //Get and Plot Live and historical data
 //Size and fill styling are based on bike and dock availability
-var url = 'https://raw.githubusercontent.com/RuochangH/test/0350e597361ad5a2e3ed5c2fdcb6413e79bd2bd7/Output.geojson';
+var yieldurl = 'https://raw.githubusercontent.com/RuochangH/test/0350e597361ad5a2e3ed5c2fdcb6413e79bd2bd7/Output.geojson';
 var predURL = 'https://raw.githubusercontent.com/CSE6242Team45/CSE6242Team45.github.io/main/PricePred.geojson';
 
 var landingPage =function(){
@@ -490,14 +490,6 @@ landingPage();
                         .attr("transform","rotate(-20)")
                         .attr("text-anchor","middle")
                         
-                      // svg.append("g")
-                      //   .attr("class", "x axis")
-                      //   .append("line")
-                      //   .attr("y1", y(0))
-                      //   .attr("y2", y(0))
-                      //   .attr("x1", 0)
-                      //   .attr("x2", width);
-  
           // Ensure that if the map is zoomed out such that multiple
           // copies of the feature are visible, the popup appears
           // over the copy being pointed to.
@@ -787,93 +779,6 @@ function onUp(e) {
                   console.log(coor2);
 
 
-
-                  var routeURL = 'https://api.mapbox.com/directions/v5/mapbox/walking/' +
-                  user[0] + ',' + user[1] + ';' + coor[0] + ',' + coor[1] + '?geometries=polyline&access_token='+mapboxgl.accessToken;
-                  console.log(routeURL);
-                  var routeURL2 = 'https://api.mapbox.com/directions/v5/mapbox/walking/' +
-                  user[0] + ',' + user[1] + ';' + coor2[0] + ',' + coor2[1] + '?geometries=polyline&access_token='+mapboxgl.accessToken;
-
-                    $.ajax(routeURL).done(function(routes){
-                          var routePoints = decode(routes.routes[0].geometry);
-                                var revisedPoints = _.map(routePoints,function(point){
-                                      return [point[1],point[0]];
-                                        });
-                                      var route = turf.lineString(revisedPoints);
-                                      console.log(route);
-
-
-                                        $.ajax(routeURL2).done(function(routes){
-                                          var routePoints2 = decode(routes.routes[0].geometry);
-                                          var revisedPoints2 = _.map(routePoints2,function(point){
-                                            return [point[1],point[0]];
-                                          });
-                                          var route2 = turf.lineString(revisedPoints2);
-                                          console.log(route2);
-
-                                          $('#route').click(function(){
-                                            $("#all").show;
-
-                                            if(map.getLayer('route')){
-                                            map.removeLayer('route');
-                                            map.removeSource('route');}
-
-
-                                              if(map.getLayer('route2')){
-                                              map.removeLayer('route2');
-                                              map.removeSource('route2');}
-
-
-                                            map.addSource(
-                                              'route',{
-                                              'type':'geojson',
-                                              'data':route
-                                            });
-
-                                            map.addLayer({
-                                              "id": "route",
-                                              "type": "line",
-                                              "source": 'route',
-                                              "layout": {
-                                                "line-join": "round",
-                                                "line-cap": "round"
-                                              },
-                                              "paint": {
-                                                "line-color": "orange",
-                                                "line-width": 4
-                                              }
-                                            });
-                                            map.addSource(
-                                              'route2',{
-                                              'type':'geojson',
-                                              'data':route2
-                                            });
-
-                                            map.addLayer({
-                                              "id": "route2",
-                                              "type": "line",
-                                              "source": 'route2',
-                                              "layout": {
-                                                "line-join": "round",
-                                                "line-cap": "round"
-                                              },
-                                              "paint": {
-                                                "line-color": "green",
-                                                "line-width": 4
-                                              }
-                                            });
-
-                                        });
-
-
-                                        });
-
-
-
-
-
-
-              });
 
 
 
