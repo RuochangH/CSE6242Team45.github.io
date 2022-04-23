@@ -124,10 +124,63 @@
       <i class="fa-solid fa-play"></i>&nbsp;Click and predict!</button>
       <button id="download" class="btn btn-sm collapsed"
       style="background-color:rgba(180,231,206,0.1); color:#474A2C; font-weight:bold; font-size:18px">
-      <i class="fa-solid fa-play"></i>&nbsp;Download Data</button>
+      <i class="fa-solid fa-download"></i>&nbsp;Download Data</button>
       </div>
 
+      <div id="yield" >
+        <button id="s0"> Historical Yield <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+
+      <div id="yieldconsole" style="display: none;">
+
+        <h5 style="color:grey">Historical Yield by Crops and Year</h5>
+      
+        <div class='session' >
+        <h5>Yield</h5>
+        <div class='row colors'>
+        </div>
+        <div class='row labels'>
+          <div class='label'>0</div>
+          <div class='label'>25</div>
+          <div class='label'>50</div>
+          <div class='label'>100</div>
+          <div class='label'>200</div>
+          <div class='label'>500</div><div class='label'>800</div><div class='label'>1000+</div>
+        </div>
+      </div>
+
+        <div class='session' id='sliderbar'>
+          <h6>Year: <label id='active-year'>2012</label></h6>
+          <input id='slider' class='row' type='range' min='2007' max='2021' step='1' value='2012' />
+        </div>
+
+        <div class='session'>
+          <h6>Select a Crop</h6>
+          <div class='row' id='filters'>
+            <input id='Barley' type='radio' name='toggle' value='Barley' checked='checked'>
+            <label for='Barley'>Barley</label>
+            <input id='Corn' type='radio' name='toggle' value='Corn'>
+            <label for='Corn'>Corn</label>
+            <input id='Potato' type='radio' name='toggle' value='Potato'>
+            <label for='Potato'>Potato</label>
+            <input id='Soybean' type='radio' name='toggle' value='Soybean'>
+            <label for='Soybean'>Soybean</label>
+            <input id='Wheat' type='radio' name='toggle' value='Wheat'>
+            <label for='Wheat'>Wheat</label>
+
+          </div>
+        </div>
+        <div id="back" >
+          <button id="s1"><i class="fa-solid fa-arrow-left"></i>   Future Prediction </button>
+        </div>
+
+      </div>
+
+
+  
   </div>
+
+  
 
 <div id='map' class="map"></div>
 
@@ -140,8 +193,11 @@
   <div><p style="font-size:10px; margin-left:3%;margin-top:3%">*Color shades are proportional to price.</p></div>
 </div>
 
+
+
+
 <script src="js/new.js"></script>
-<script src="js/decode.js"></script>
+
 
 
 

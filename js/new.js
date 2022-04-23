@@ -14,7 +14,7 @@ map.addControl(new mapboxgl.NavigationControl());
 
 //Get and Plot Live and historical data
 //Size and fill styling are based on bike and dock availability
-var yieldurl = 'https://raw.githubusercontent.com/RuochangH/test/0350e597361ad5a2e3ed5c2fdcb6413e79bd2bd7/Output.geojson';
+var yieldurl = 'https://raw.githubusercontent.com/CSE6242Team45/CSE6242Team45.github.io/main/yield.geojson';
 var predURL = 'https://raw.githubusercontent.com/CSE6242Team45/CSE6242Team45.github.io/main/PricePred.geojson';
 
 var landingPage =function(){
@@ -605,9 +605,126 @@ $('#download').click(function(){
   });
 
  
-
+  $('#s0').click(function(){
+    $('.intro').hide();
+    $('#prediction').hide();
+    $('#yield').hide();
+    $('.legend0').hide();
+    $('#yieldconsole').show();
   
+    if(map.getLayer('color')){map.removeLayer('color');}
+    if(map.getLayer('prediction')){map.removeLayer('prediction');}
+    if(map.getLayer('outline')){map.removeLayer('outline');}
+    if(map.getLayer('color-Hover')){map.removeLayer('color-Hover');}
+    if(map.getLayer('outline-Hover')){map.removeLayer('outline-Hover')}
+    
+    if(map.getLayer('new-color')){map.removeLayer('new-color');}
+    if(map.getLayer('new-prediction')){map.removeLayer('new-prediction');}
+    if(map.getLayer('new-outline')){map.removeLayer('new-outline');}
+    if(map.getLayer('new-color-Hover')){map.removeLayer('new-color-Hover');}
+    if(map.getLayer('new-outline-Hover')){map.removeLayer('new-outline-Hover');}
 
+    let filterYear = ['==',['number',['get','year']],2012];
+    let filterCrop = ['==',['string',['get','crop']],'Barley']  
+    map.addLayer({
+        id: 'histyield',
+        type: 'circle',
+        source: {
+          type: 'geojson',
+          data: yieldurl
+        },
+        paint: {
+          'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['number', ['get', 'Value']],
+            0,
+            2,
+            5,
+            10
+          ],
+          'circle-color': [
+            'interpolate',
+            ['linear'],
+            ['number', ['get', 'Value']],
+            0,
+            '#c51b7d',
+            25,
+            '#de77ae',
+            50,
+            '#f1b6da',
+            100,
+            '#fde0ef',
+            200,
+            '#ffffbf',
+            500,
+            '#b8e186',
+            800,
+            '#7fbc41',
+            1000,
+            '#4d9221'
+          ],
+          'circle-opacity': 0.8
+        },
+        'filter':['all',filterYear,filterCrop]
+      });
+
+      // update hour filter when the slider is dragged
+   document.getElementById('slider').addEventListener('input', (event) => {
+      const year = parseInt(event.target.value);
+    // update the map
+     filterYear = ['==', ['number', ['get', 'year']], year];
+     map.setFilter('histyield', ['all', filterYear, filterCrop]);
+   
+  // update text in the UI
+  document.getElementById('active-year').innerText = year;
+  });
+   
+  document
+  .getElementById('filters')
+  .addEventListener('change', (event) => {
+  const crop = event.target.value;
+  // update the map filter
+  if (crop === 'Barley') {
+    filterCrop = ['match',['get','crop'],['Barley'],true,false];
+  } else if (crop === 'Corn') {
+    filterCrop = [
+  'match',
+  ['get', 'crop'],
+  ['Corn'],
+  true,
+  false
+  ];
+  } else if (crop === 'Potato') {
+    filterCrop = [
+  'match',
+  ['get', 'crop'],
+  ['Potato'],
+  true,
+  false
+  ];
+  }else if (crop === 'Soybean') {
+    filterCrop = [
+    'match',
+    ['get', 'crop'],
+    ['Soybean'],
+    true,
+    false
+    ];
+    }else if (crop === 'Wheat') {
+      filterCrop = [
+      'match',
+      ['get', 'crop'],
+      ['Wheat'],
+      true,
+      false
+      ];
+      } else {
+  console.error('error');
+  }
+  map.setFilter('histyield', ['all', filterYear, filterCrop]);
+
+  });
 
 
 
@@ -718,160 +835,10 @@ function onUp(e) {
         map.once('touchend', onUp);
           });
 
-          //read user input
-          $('#findStation').click(function(){
-            map.removeLayer('liveBike');
-            map.removeLayer('liveBike-Hover');
-            map.removeLayer('new');
-            map.removeLayer('new-Hover');
-            //map.addLayer('nearest');
-            //map.addLayer('balance');
 
-            if(map.getLayer('nearest')){
-            map.removeLayer('nearest');
-            map.removeSource('coorr');}
-
-            if(map.getLayer('balance')){
-            map.removeLayer('balance');
-            map.removeSource('coorr2');}
-
-            if(map.getLayer('route')){
-            map.removeLayer('route');
-            map.removeSource('route');}
-
-            if(map.getLayer('route2')){
-            map.removeLayer('route2');
-            map.removeSource('route2');}
-
-            $('.legend0').hide();
-            $('.legend1').hide();
-            $('#routttt').show();
-            $('#alllll').hide();
-            $('#route').show();
-
-
-
-          function readInput(){
-            switch($('#purpose').find(":selected").text()){
-              case 'Station Check': return 'totalDocks';
-              case 'Rent':  return 'bikesAvailable';
-              case 'Return': return 'docksAvailable';}
-          }
-          var availability = readInput();
-          
-
-            $.ajax({method: 'GET',url:url,}).done(function(data){
-              var filteredFeatures = data.features.filter(function(feature){
-                return feature.properties[availability]>1;
-              });
-
-
-          //get raw coordinates for turf
-              var forturf= _.map(filteredFeatures, function(feature){
-                var a=feature.geometry.coordinates[1];
-                var b=feature.geometry.coordinates[0];
-                return turf.point([a,b]);});
-              var selection=turf.featureCollection(forturf);
-              //console.log(forturf);
-              var foruser = [0,0];
-              foruser[0]=user[1];
-              foruser[1]=user[0];
-              var target = turf.point(foruser);
-              console.log(target);
-              var nearest = turf.nearestPoint(target,selection);
-              var coor = [nearest.geometry.coordinates[1],nearest.geometry.coordinates[0]];
-              console.log(coor);
-
-              var coorr =
-               {
-                  "type": "Feature",
-                  "geometry": {
-                      "type": "Point",
-                      "coordinates": coor
-                  }
-              };
-
-              map.addSource(
-                'coorr',{
-                'type':'geojson',
-                'data':coorr
-              });
-
-              map.addLayer({
-                'id': 'nearest',
-                'type': 'circle',
-                'source': 'coorr',
-                  'paint': {
-                    'circle-color': 'orange',
-                    'circle-opacity': 0.8,
-                    'circle-radius':12
-                  }
-                },'hist');
-
-
-              var d = new Date();
-              var hr= d.getHours()+1;
-
-              $.ajax(histURL).done(function(data) {
-                var parsedData = JSON.parse(data);
-                var filteredFeatures2;
-
-                var forhist = function(){
-                  switch($('#purpose').find(":selected").text()){
-                    case 'Station Check': filteredFeatures2= parsedData.features.filter(function(feature){
-                      return feature.properties['h'+hr]>0.1 | feature.properties['h'+hr]<-0.1;}); break;
-                      case 'Rent': filteredFeatures2= parsedData.features.filter(function(feature){
-                        return feature.properties['h'+hr]>0.1;}); break;
-                        case 'Return': filteredFeatures2= parsedData.features.filter(function(feature){
-                          return feature.properties['h'+hr]<-0.1;}); break;
-                  }
-                };
-
-                forhist();
-                var forturf2= _.map(filteredFeatures2, function(feature){
-                  var a=feature.geometry.coordinates[1];
-                  var b=feature.geometry.coordinates[0];
-                  return turf.point([a,b]);});
-                var selection2=turf.featureCollection(forturf2);
-                console.log(selection2);
-
-                var balance = turf.nearestPoint(target,selection2);
-                console.log(balance);
-                var coor2 = [balance.geometry.coordinates[1],balance.geometry.coordinates[0]];
-                console.log(coor2);
-
-                var coorr2 =
-                 {
-                    "type": "Feature",
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": coor2
-                    }
-                };
-
-                map.addSource(
-                  'coorr2',{
-                  'type':'geojson',
-                  'data':coorr2
-                });
-
-                map.addLayer({
-                  'id': 'balance',
-                  'type': 'circle',
-                  'source': 'coorr2',
-                    'paint': {
-                      'circle-color': 'green',
-                      'circle-opacity': 0.8,
-                      'circle-radius':12
-                    }
-                  },'hist');
-                  console.log(user);
-                  console.log(coor);
-                  console.log(coor2);
-
-            });
-
-          });
-    });
 });
+  });
 
+
+  $('#s1').click(function(){location.reload();})
+  

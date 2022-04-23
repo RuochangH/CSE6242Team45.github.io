@@ -87,26 +87,6 @@
   width: 20px;
 }
 
-.legend1 {
-  background-color:#fff;
-  border-radius:10px;
-  bottom:30px;
-  box-shadow:0 1px 2px rgba(0,0,0,0.10);
-  font:14px 'Franklin Gothic Book'
-  padding: 10px;
-  position:absolute;
-  right:10px;
-  z-index: 1;
-  opacity: 0.8;
-}
-
-.legend1 div span {
-  border-radius: 50%;
-  border:2px solid #535E80;
-  height:20px;
-  margin-right:5px;
-  width: 20px;
-}
 
 .bar.positive {
   fill: #9BDEAC;
@@ -128,18 +108,60 @@
 }
 
 
-#purpose {
-    display:block;
-    background-color: rgba(236,233,231,0.8);
-    border: none;
-    color: #474A2C;
-    text-decoration: none;
-    font-size: 16px;
-    margin: 25px 0px;
-    cursor: pointer;
+#yield{
+  position:absolute;
+  top:650px;
+  width:375px;
+  margin-left: 240px;
+  margin-right:10px;
 }
 
+#s0 {
+  display:block;
+  background-color: #F5AD62;
+  border: none;
+  color: #535E80;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 10px 0px;
+  cursor: pointer;
+}
 
+#s1 {
+  display:block;
+  background-color: #F5AD62;
+  border: none;
+  color: #535E80;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 10px 0px;
+  cursor: pointer;
+}
 
+.session {
+  margin-bottom: 20px;
+}
 
+.row {
+  height: 12px;
+  width: 360px;
+}
 
+.colors {
+  background: linear-gradient(to right, #c51b7d, #de77ae, #f1b6da, #fde0ef, #ffffbf, #e6f5d0,#b8e186,#7fbc41,#4d9221);
+  margin-bottom: 5px;
+}
+
+.label {
+  width: 12.5%;
+  display: inline-block;
+  text-align: center;
+}
+
+#yieldconsole{
+  position: absolute;
+  top:180px;
+  font-family: Franklin Gothic Book;
+  right: 10px;
+
+}
