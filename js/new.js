@@ -143,13 +143,7 @@ var landingPage =function(){
                     .attr("transform","rotate(-20)")
                     .attr("text-anchor","middle")
                     
-                  // svg.append("g")
-                  //   .attr("class", "x axis")
-                  //   .append("line")
-                  //   .attr("y1", y(0))
-                  //   .attr("y2", y(0))
-                  //   .attr("x1", 0)
-                  //   .attr("x2", width);
+                                ]
 
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
@@ -220,6 +214,7 @@ map.on('load', function () {
         map.setFilter("color-Hover",["==","GEOID",""]);
         map.setFilter("outline-Hover",["==","GEOID",""]);
         map.getCanvas().style.cursor = '';
+        document.getElementById('pd').innerHTML = '<h6 style="color:grey;">Hover over a state for price</h6>';
     });
 
 });
@@ -510,7 +505,8 @@ $('#download').click(function(){
   map.on('mouseleave', 'new-prediction', function() {
     map.setFilter("new-color-Hover",["==","GEOID",""]);
     map.setFilter("new-outline-Hover",["==","GEOID",""]);
-      map.getCanvas().style.cursor = '';});
+      map.getCanvas().style.cursor = '';
+      document.getElementById('pd').innerHTML = '<h6 style="color:grey;">Hover over a state for price</h6>'});
 
 
       map.on('click', 'new-prediction', function (e) {
