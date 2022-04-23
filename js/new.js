@@ -660,11 +660,6 @@ function onUp(e) {
           var availability = readInput();
           
 
-
-          //calculate available station according to user input
-
-
-          //})
             $.ajax({method: 'GET',url:url,}).done(function(data){
               var filteredFeatures = data.features.filter(function(feature){
                 return feature.properties[availability]>1;
@@ -713,11 +708,7 @@ function onUp(e) {
                   }
                 },'hist');
 
-              //  map.getSource('nearest').setData(coorr);
-              //console.log(nearest);
 
-              //Find the neares station that needs rebalancing
-              //Get the next hour
               var d = new Date();
               var hr= d.getHours()+1;
 
@@ -777,13 +768,6 @@ function onUp(e) {
                   console.log(user);
                   console.log(coor);
                   console.log(coor2);
-
-
-
-
-
-
-
 
             });
 
