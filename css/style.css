@@ -143,32 +143,3 @@
 
 
 
-
-
-/* =============
-Media Queries
-============= */
-
-
-.street-selected path {
-  -webkit-animation: active 5s ease-out;
-  -webkit-animation-iteration-count: infinite;
-}
-
-@-webkit-keyframes active {
-    0% {opacity: 1;}
-    50% {opacity: 1; stroke-width: 10;}
-    100% {opacity: 1;}
-}
-
-@media screen and (min-width: 480px) and (max-width: 800px) {
-    /*.item {
-        background-color: blue;
-    }*/
-}
-
-@media screen and (max-width: 479px) {
-    /*.item {
-        background-color: red;
-    }*/
-}
