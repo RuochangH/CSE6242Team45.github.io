@@ -6,8 +6,7 @@ var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/ruochang/cjgx7h9d8000b2so75lhsbpjh',
     center: [-97,39],
-    zoom: 3.5,
-    preserveDrawingBuffer: true
+    zoom: 3.5
 });
 map.addControl(new mapboxgl.NavigationControl());
 
@@ -220,27 +219,6 @@ map.on('load', function () {
 };
 
 landingPage();
-//Download Map Function
-
-$('#downloadMap').click(function(){
-     html2canvas($("#map"), {
-            onrendered: function(canvas) {
-//                 theCanvas = canvas;
-//                 //document.body.appendChild(canvas);
-                        
-//                 // Convert and download as image
-//                 Canvas2Image.saveAsPNG(canvas);
-//                 $("#img-out").append(canvas);
-     
-//                 // Clean up
-//                 document.body.removeChild(canvas);
-//                //$('body').text(canvas.toDataURL());
-                $('body').html('<img src="'+canvas.toDataURL()+'"/>');
-//             }
-        });
-    var img = map.getCanvas().parent().toDataURL();
-   $('body').html('<img src="'+img+'"/>');
-});
 
 // Download Function
 $('#download').click(function(){
@@ -745,10 +723,64 @@ $('#download').click(function(){
   console.error('error');
   }
   map.setFilter('histyield', ['all', filterYear, filterCrop]);
-
   });
 
+  
+  $('#download-yield').click(function(){
+    var crop_list = ["Barley","Corn","Potato","Wheat","Soybean"];
+    var crop_file_list = ["BARLEY","CORN","POTATOES","WHEAT","SOYBEANS"];
+    for (var i = 0; i < crop_list.length; i++) { 
+      if (document.querySelector('#'+crop_list[i]).checked==true){
+        var crop_index = i;
+      } 
+    }
+    crop_name = crop_file_list[crop_index];
+    var download_link = document.createElement("a");
+    console.log('data/'+crop_name+'_data_cleaned_YIELD.csv');
+    download_link.href = 'data/'+crop_name+'_data_cleaned_YIELD.csv';
+    document.body.appendChild(download_link);
+    download_link.click();
+    document.body.removeChild(download_link);
+    delete download_link;
+  });
 
+  $('#download-production').click(function(){
+    var crop_list = ["Barley","Corn","Potato","Wheat","Soybean"];
+    var crop_file_list = ["BARLEY","CORN","POTATOES","WHEAT","SOYBEANS"];
+    for (var i = 0; i < crop_list.length; i++) { 
+      if (document.querySelector('#'+crop_list[i]).checked==true){
+        var crop_index = i;
+      } 
+    }
+    crop_name = crop_file_list[crop_index];
+    var download_link = document.createElement("a");
+    console.log('data/'+crop_name+'_data_cleaned_YIELD.csv');
+    download_link.href = 'data/'+crop_name+'_data_cleaned_PRODUCTION.csv';
+    document.body.appendChild(download_link);
+    download_link.click();
+    document.body.removeChild(download_link);
+    delete download_link;
+  });
+
+  $('#download-sales').click(function(){
+    // const cb = document.querySelector('#accept');
+    // console.log(cb.checked); // false
+    var crop_list = ["Barley","Corn","Potato","Wheat","Soybean"];
+    var crop_file_list = ["BARLEY","CORN","POTATOES","WHEAT","SOYBEANS"];
+    for (var i = 0; i < crop_list.length; i++) { 
+      if (document.querySelector('#'+crop_list[i]).checked==true){
+        var crop_index = i;
+      } 
+    }
+    crop_name = crop_file_list[crop_index];
+    var download_link = document.createElement("a");
+    console.log('data/'+crop_name+'_data_cleaned_YIELD.csv');
+    download_link.href = 'data/'+crop_name+'_data_cleaned_SALES.csv';
+    document.body.appendChild(download_link);
+    download_link.click();
+    document.body.removeChild(download_link);
+    delete download_link;
+  });
 
 
     //Add geolocator
