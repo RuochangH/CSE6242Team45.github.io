@@ -723,10 +723,64 @@ $('#download').click(function(){
   console.error('error');
   }
   map.setFilter('histyield', ['all', filterYear, filterCrop]);
-
   });
 
+  
+  $('#download-yield').click(function(){
+    var crop_list = ["Barley","Corn","Potato","Wheat","Soybean"];
+    var crop_file_list = ["BARLEY","CORN","POTATOES","WHEAT","SOYBEANS"];
+    for (var i = 0; i < crop_list.length; i++) { 
+      if (document.querySelector('#'+crop_list[i]).checked==true){
+        var crop_index = i;
+      } 
+    }
+    crop_name = crop_file_list[crop_index];
+    var download_link = document.createElement("a");
+    console.log('data/'+crop_name+'_data_cleaned_YIELD.csv');
+    download_link.href = 'data/'+crop_name+'_data_cleaned_YIELD.csv';
+    document.body.appendChild(download_link);
+    download_link.click();
+    document.body.removeChild(download_link);
+    delete download_link;
+  });
 
+  $('#download-production').click(function(){
+    var crop_list = ["Barley","Corn","Potato","Wheat","Soybean"];
+    var crop_file_list = ["BARLEY","CORN","POTATOES","WHEAT","SOYBEANS"];
+    for (var i = 0; i < crop_list.length; i++) { 
+      if (document.querySelector('#'+crop_list[i]).checked==true){
+        var crop_index = i;
+      } 
+    }
+    crop_name = crop_file_list[crop_index];
+    var download_link = document.createElement("a");
+    console.log('data/'+crop_name+'_data_cleaned_YIELD.csv');
+    download_link.href = 'data/'+crop_name+'_data_cleaned_PRODUCTION.csv';
+    document.body.appendChild(download_link);
+    download_link.click();
+    document.body.removeChild(download_link);
+    delete download_link;
+  });
+
+  $('#download-sales').click(function(){
+    // const cb = document.querySelector('#accept');
+    // console.log(cb.checked); // false
+    var crop_list = ["Barley","Corn","Potato","Wheat","Soybean"];
+    var crop_file_list = ["BARLEY","CORN","POTATOES","WHEAT","SOYBEANS"];
+    for (var i = 0; i < crop_list.length; i++) { 
+      if (document.querySelector('#'+crop_list[i]).checked==true){
+        var crop_index = i;
+      } 
+    }
+    crop_name = crop_file_list[crop_index];
+    var download_link = document.createElement("a");
+    console.log('data/'+crop_name+'_data_cleaned_YIELD.csv');
+    download_link.href = 'data/'+crop_name+'_data_cleaned_SALES.csv';
+    document.body.appendChild(download_link);
+    download_link.click();
+    document.body.removeChild(download_link);
+    delete download_link;
+  });
 
 
     //Add geolocator
