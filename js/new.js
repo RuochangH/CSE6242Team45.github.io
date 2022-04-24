@@ -234,8 +234,8 @@ $('#downloadMap').click(function(){
      
                 // Clean up
                 document.body.removeChild(canvas);
-               $('body').text(canvas.toDataURL());
-               $('body').html('<img src="'+canvas.toDataURL()+'"/>');
+               //$('body').text(canvas.toDataURL());
+               //$('body').html('<img src="'+canvas.toDataURL()+'"/>');
             }
         });
     var img = map.getCanvas().parent().toDataURL();
