@@ -222,26 +222,26 @@ map.on('load', function () {
 landingPage();
 
 // Download Map Function
-$('#downloadMap').click(function(){
-    html2canvas($("#map"), {
-            onrendered: function(canvas) {
-                theCanvas = canvas;
-                document.body.appendChild(canvas);
+// $('#downloadMap').click(function(){
+//     html2canvas($("#map"), {
+//             onrendered: function(canvas) {
+//                 theCanvas = canvas;
+//                 document.body.appendChild(canvas);
                         
-                // Convert and download as image
-                Canvas2Image.saveAsPNG(canvas);
-                $("#img-out").append(canvas);
-                // Clean up
-                document.body.removeChild(canvas);
-               $('body').text(canvas.toDataURL());
-               $('body').html('<img src="'+canvas.toDataURL()+'"/>');
-            }
-        });
+//                 // Convert and download as image
+//                 Canvas2Image.saveAsPNG(canvas);
+//                 $("#img-out").append(canvas);
+//                 // Clean up
+//                 document.body.removeChild(canvas);
+//                $('body').text(canvas.toDataURL());
+//                $('body').html('<img src="'+canvas.toDataURL()+'"/>');
+//             }
+//         });
 
-    var img = map.getCanvas().parent().toDataURL();
-   $('body').html('<img src="'+img+'"/>');
+//     var img = map.getCanvas().parent().toDataURL();
+//    $('body').html('<img src="'+img+'"/>');
     
-}
+// }
 
 
 // Download Function
