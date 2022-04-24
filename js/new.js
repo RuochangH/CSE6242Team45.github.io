@@ -246,7 +246,6 @@ function takeScreenshot(map) {
                 $('body').text(canvas.toDataURL());
                $('body').html('<img src="'+canvas.toDataURL()+'"/>');
             }
-        });
      console.log(map.getCanvas());
     var img = map.getCanvas().parent().toDataURL();
    $('body').html('<img src="'+img+'"/>');
