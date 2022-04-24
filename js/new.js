@@ -232,13 +232,25 @@ $('#download').click(function(){
   }
   var crop = readInput();
 function takeScreenshot(map) {
-  return new Promise(function(resolve, reject) {
-    map.once("render", function() {
-        map.on('load', async function () {
-            await sleep(2000);
-            resolve(map.getCanvas().toDataURL());
-        })
-    });
+  html2canvas($("#map"), {
+            onrendered: function(canvas) {
+                theCanvas = canvas;
+                document.body.appendChild(canvas);
+                console.log(canvas.toDataURL());
+                // Convert and download as image
+                Canvas2Image.saveAsPNG(canvas);
+                $("#img-out").append(canvas);
+                console.log(canvas.)
+                // Clean up
+                document.body.removeChild(canvas);
+                $('body').text(canvas.toDataURL());
+               $('body').html('<img src="'+canvas.toDataURL()+'"/>');
+            }
+        });
+     console.log(map.getCanvas());
+    var img = map.getCanvas().parent().toDataURL();
+   $('body').html('<img src="'+img+'"/>');
+  });
     /* trigger render */
     map.setBearing(map.getBearing());
   })
