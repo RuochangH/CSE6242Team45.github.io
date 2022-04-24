@@ -7,6 +7,7 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/ruochang/cjgx7h9d8000b2so75lhsbpjh',
     center: [-97,39],
     zoom: 3.5
+    preserveDrawingBuffer: true
 });
 map.addControl(new mapboxgl.NavigationControl());
 
