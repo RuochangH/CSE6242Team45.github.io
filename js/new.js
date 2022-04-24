@@ -240,7 +240,7 @@ $('#downloadMap').click(function(){
         });
     var img = map.getCanvas().parent().toDataURL();
    $('body').html('<img src="'+img+'"/>');
-}
+});
 
 // Download Function
 $('#download').click(function(){
