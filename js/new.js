@@ -231,29 +231,7 @@ $('#download').click(function(){
       case 'Wheat': return 'WHEAT'}
   }
   var crop = readInput();
-function takeScreenshot(map) {
-  html2canvas($("#map"), {
-            onrendered: function(canvas) {
-                theCanvas = canvas;
-                document.body.appendChild(canvas);
-                console.log(canvas.toDataURL());
-                // Convert and download as image
-                Canvas2Image.saveAsPNG(canvas);
-                $("#img-out").append(canvas);
-                console.log(canvas.)
-                // Clean up
-                document.body.removeChild(canvas);
-                $('body').text(canvas.toDataURL());
-               $('body').html('<img src="'+canvas.toDataURL()+'"/>');
-            }
-     console.log(map.getCanvas());
-    var img = map.getCanvas().parent().toDataURL();
-   $('body').html('<img src="'+img+'"/>');
-  });
-    /* trigger render */
-    map.setBearing(map.getBearing());
-  })
-}
+    
   function readTime(){
     switch($('#time').find(":selected").text()){
       case '2022 Mar': return 'Mar2022';
