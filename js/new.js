@@ -231,7 +231,7 @@ $('#download').click(function(){
       case 'Wheat': return 'WHEAT'}
   }
   var crop = readInput();
-    
+
   function readTime(){
     switch($('#time').find(":selected").text()){
       case '2022 Mar': return 'Mar2022';
@@ -841,4 +841,3 @@ function onUp(e) {
 
 
   $('#s1').click(function(){location.reload();})
-  
